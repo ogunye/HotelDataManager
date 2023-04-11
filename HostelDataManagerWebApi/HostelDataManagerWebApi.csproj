@@ -20,6 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\HostelDataManagerInfrastructure\HostelDataManagerInfrastructure.csproj" />
     <ProjectReference Include="..\HostelDataManagerLoggingService\HostelDataManagerLoggingService.csproj" />
+    <ProjectReference Include="..\HostelDataManagerServices\HostelDataManagerServices.csproj" />
     <ProjectReference Include="..\HostelDataManagerShared\HostelDataManagerShared.csproj" />
   </ItemGroup>
 

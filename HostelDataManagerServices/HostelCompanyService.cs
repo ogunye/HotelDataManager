@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HostelDataManagerApplication.CommonContracts;
+using HostelDataManagerDomain.Entities;
 using HostelDataManagerServiceContract;
 using HostelDataManagerShared.DataTransferObjects.HostelDTOs;
 
@@ -18,34 +19,77 @@ namespace HostelDataManagerServices
             _mapper = mapper;
         }
 
-        public Task<HostelDto> CreateHostelCompany(HostelForCreateionDto hostelForCreateionDto)
+        public async Task<HostelDto> CreateHostelCompany(HostelForCreateionDto hostelForCreateionDto)
         {
-            throw new NotImplementedException();
+            var hotelEntity = _mapper.Map<HostelCompany>(hostelForCreateionDto);
+
+            _repository.Hostel.CreateHostel(hotelEntity);
+            await _repository.SaveAsync();
+
+            var hotelToReturn = _mapper.Map<HostelDto>(hotelEntity);
+
+            return hotelToReturn;
         }
 
-        public Task DeleteHostelCompanyAsync(int hostelId, bool trackChanges)
+        public async Task DeleteHostelCompanyAsync(int hostelId, bool trackChanges)
         {
-            throw new NotImplementedException();
+            var hostel = await _repository.Hostel.GetHostelAsync(hostelId, trackChanges);
+            if (hostel == null)
+            {
+                //throw new HostelCompanyNotFoundExpection(hostelId);
+            }
+            _repository.Hostel.DeleteHostel(hostel);
+            await _repository.SaveAsync();
         }
 
-        public Task<IEnumerable<HostelDto>> GetAllHostelsAsync(bool trackChange)
+        public async Task<IEnumerable<HostelDto>> GetAllHostelsAsync(bool trackChange)
         {
-            throw new NotImplementedException();
+            var hostelEntities = await _repository.Hostel.GetAllHostelsAsync(trackChange);
+
+            var hostelsToReturn = _mapper.Map<IEnumerable<HostelDto>>(hostelEntities);
+
+            return hostelsToReturn;
         }
 
-        public Task<IEnumerable<HostelDto>> GetByIdsAsync(IEnumerable<int> ids, bool trackChange)
+        public async Task<IEnumerable<HostelDto>> GetByIdsAsync(IEnumerable<int> ids, bool trackChange)
         {
-            throw new NotImplementedException();
+            if(ids is null)
+            {
+                //throw new IdParametersBadRequestException();
+            }
+
+            var hostelEntities = await _repository.Hostel.GetByIdsAsync(ids, trackChange);
+            if(ids.Count() != hostelEntities.Count())
+            {
+                //throw new CollectionByIdsBadRequestException();
+            }
+
+            var hostelsToReturn = _mapper.Map<IEnumerable<HostelDto>>(hostelEntities);
+            return hostelsToReturn;
         }
 
-        public Task<HostelDto> GetHostelCompanyAsync(int hostelId, bool trackChange)
+        public async Task<HostelDto> GetHostelCompanyAsync(int hostelId, bool trackChange)
         {
-            throw new NotImplementedException();
+            var hostel = await _repository.Hostel.GetHostelAsync(hostelId, trackChange);
+            if(hostel == null)
+            {
+                //throw new HostelNotFoundException(hostelId);
+            }
+             var hostelDto = _mapper.Map<HostelDto>(hostel);
+            return hostelDto;
         }
 
-        public Task UpdateHostelAsync(int hostelId, HostelForUpdateDto hostelForUpdateDto, bool trackChanges)
+        public async Task UpdateHostelAsync(int hostelId, HostelForUpdateDto hostelForUpdateDto, bool trackChanges)
         {
-            throw new NotImplementedException();
+            var hostelEntity = await _repository.Hostel.GetHostelAsync(hostelId, trackChanges);
+
+            if(hostelEntity is null)
+            {
+                //throw new HostelNotFoundException(hostelId);
+            }
+            _mapper.Map(hostelForUpdateDto, hostelEntity);
+
+            await _repository.SaveAsync();
         }
     }
 }

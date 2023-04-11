@@ -13,7 +13,7 @@ namespace HostelDataManagerDomain.Common
         public virtual int Id { get; set; }
 
         [StringLength(50)]
-        public string? CreatedBy { get; set; }
+        public string? CreatedBy { get; set; } 
         public DateTime DateCreated { get; set; }
         [StringLength(50)]
         public string? ModifiedBy { get; set; }
