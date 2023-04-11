@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace HostelDataManagerServiceContract
 {
-    internal interface IServiceManager
+    public interface IServiceManager
     {
+        IHostelCompanyService HostelCompanyService { get; }
+        IEmployeeService EmployeeService { get; }
+        IAuthenticationService AuthenticationService { get; }
     }
 }

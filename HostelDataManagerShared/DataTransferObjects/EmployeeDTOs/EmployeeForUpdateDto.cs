@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace HostelDataManagerShared.DataTransferObjects.EmployeeDTOs
 {
-    public record EmployeeForUpdate : EmplyeeForManpluationDto;
+    public record EmployeeForUpdateDto : EmplyeeForManpluationDto;
 }

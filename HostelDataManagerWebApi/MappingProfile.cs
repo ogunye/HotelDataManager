@@ -13,7 +13,7 @@ namespace HostelDataManagerWebApi
             CreateMap<HostelForCreateionDto, HostelCompany>();
             CreateMap<EmployeeForCreationDto, Employee>();
             CreateMap<HostelForUpdateDto, HostelCompany>();
-            CreateMap<EmployeeForUpdate, Employee>();
+            CreateMap<EmployeeForUpdateDto, Employee>();
             CreateMap<Employee, EmployeeDto>();
             CreateMap<HostelCompany, HostelDto>();
 
