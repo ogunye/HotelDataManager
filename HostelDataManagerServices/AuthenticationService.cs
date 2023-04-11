@@ -26,13 +26,13 @@ namespace HostelDataManagerServices
         private User _user;
 
         public AuthenticationService(ILoggerManager logger, IMapper mapper,
-            UserManager<User> userManager, IConfiguration configuration, User user)
+            UserManager<User> userManager, IConfiguration configuration)
         {
             _logger = logger;
             _mapper = mapper;
             _userManager = userManager;
             _configuration = configuration;
-            _user = user;
+            //_user = user;
 
         }
 
@@ -75,7 +75,7 @@ namespace HostelDataManagerServices
 
         private SigningCredentials GetSigningCredentials()
         {
-            var key = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("SECRET"));
+            var key = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("SECRET") ?? "mydefaultkey");
             var secert = new SymmetricSecurityKey(key);
 
             return new SigningCredentials(secert, SecurityAlgorithms.HmacSha256);

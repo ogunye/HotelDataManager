@@ -22,7 +22,7 @@ namespace HostelDataManagerServices
             ILoggerManager logger, 
             IMapper mapper, 
             UserManager<User> userManager,
-            User user,
+            //User user,
             IConfiguration configuration)
         {
             _companyService = new Lazy<IHostelCompanyService>(() =>
@@ -30,7 +30,7 @@ namespace HostelDataManagerServices
             _employeeService = new Lazy<IEmployeeService>(() =>
             new EmployeeService(repositoryManager, logger, mapper));
             _authenticationService = new Lazy<IAuthenticationService>(() =>
-            new AuthenticationService(logger, mapper, userManager, configuration, user));
+            new AuthenticationService(logger, mapper, userManager, configuration));
         }
         public IHostelCompanyService HostelCompanyService => _companyService.Value;
 

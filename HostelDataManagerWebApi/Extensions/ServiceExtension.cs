@@ -3,6 +3,8 @@ using HostelDataManagerDomain.Entities;
 using HostelDataManagerInfrastructure.BaseRepositories;
 using HostelDataManagerInfrastructure.DataContext;
 using HostelDataManagerLoggingService;
+using HostelDataManagerServiceContract;
+using HostelDataManagerServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +32,9 @@ namespace HostelDataManagerWebApi.Extensions
 
         public static void ConfigureRepositoryManager(this IServiceCollection services) =>
             services.AddScoped<IRepositoryManager, RepositoryManager>();
+
+        public static void ConfigureServiceManager(this IServiceCollection services) =>
+            services.AddScoped<IServiceManager, ServiceManager>();
 
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
             services.AddDbContext<RepositoryContext>(options =>
