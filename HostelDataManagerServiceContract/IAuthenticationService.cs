@@ -7,6 +7,7 @@ namespace HostelDataManagerServiceContract
     {
         Task<IdentityResult> RegistraterUser(UserForRegistrationDto userForRegistration);
         Task<bool> ValidateUser(UserForAuthenticationDto userForAuth);
-        Task<string> CreateToken();
+        Task<TokenDto> CreateToken(bool populateExp);
+        Task<TokenDto> RefreshToken(TokenDto tokenDto);
     }
 }

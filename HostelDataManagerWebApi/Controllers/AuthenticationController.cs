@@ -19,7 +19,7 @@ namespace HostelDataManagerWebApi.Controllers
             var result = await _service.AuthenticationService.RegistraterUser(userForRegistration);
             if (!result.Succeeded)
             {
-                foreach(var error in result.Errors)
+                foreach (var error in result.Errors)
                 {
                     ModelState.TryAddModelError(error.Code, error.Description);
                 }
@@ -31,13 +31,21 @@ namespace HostelDataManagerWebApi.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> Authenticate([FromBody] UserForAuthenticationDto user)
         {
-            if(!await _service.AuthenticationService.ValidateUser(user))
+            if (!await _service.AuthenticationService.ValidateUser(user))
                 return Unauthorized();
 
-            return Ok(new
-            {
-                Token = await _service.AuthenticationService.CreateToken()
-            });
+            var tokenDto = await _service.AuthenticationService.CreateToken(populateExp: true);
+
+            return Ok(tokenDto);
+
+        }
+
+        [HttpPost("refresh")]
+        public async Task<IActionResult> Refresh([FromBody] TokenDto tokenDto)
+        {
+            var tokenDtoToReturn = await _service.AuthenticationService.RefreshToken(tokenDto);
+
+            return Ok(tokenDtoToReturn);
         }
     }
 }
